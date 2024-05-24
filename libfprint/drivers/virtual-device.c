@@ -526,8 +526,8 @@ dev_verify (FpDevice *dev)
 
   if (scan_id)
     {
+      g_autoptr(FpPrint) new_scan = NULL;
       GVariant *data = NULL;
-      FpPrint *new_scan;
       FpPrint *print;
       gboolean success;
 
@@ -556,7 +556,7 @@ dev_verify (FpDevice *dev)
           self->match_reported = TRUE;
           fpi_device_verify_report (dev,
                                     success ? FPI_MATCH_SUCCESS : FPI_MATCH_FAIL,
-                                    new_scan,
+                                    g_steal_pointer (&new_scan),
                                     NULL);
         }
     }
@@ -733,7 +733,13 @@ dev_deinit (FpDevice *dev)
     }
 
   if (!self->keep_alive)
-    stop_listener (self);
+    {
+      stop_listener (self);
+      self->supports_cancellation = TRUE;
+    }
+
+  self->enroll_stages_passed = 0;
+  self->match_reported = FALSE;
 
   fpi_device_close_complete (dev, NULL);
 }
