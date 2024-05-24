@@ -119,6 +119,8 @@ driver_sources = {
         [ 'drivers/etes603.c' ],
     'egis0570' :
         [ 'drivers/egis0570.c' ],
+    'egismoc' :
+        [ 'drivers/egismoc/egismoc.c' ],
     'vfs0050' :
         [ 'drivers/vfs0050.c' ],
     'elan' :
@@ -139,6 +141,12 @@ driver_sources = {
         [ 'drivers/synaptics/synaptics.c', 'drivers/synaptics/bmkt_message.c' ],
     'goodixmoc' :
         [ 'drivers/goodixmoc/goodix.c', 'drivers/goodixmoc/goodix_proto.c' ],
+    'fpcmoc' :
+        [ 'drivers/fpcmoc/fpc.c' ],
+    'realtek' :
+        [ 'drivers/realtek/realtek.c' ],
+    'focaltech_moc' :
+        [ 'drivers/focaltech_moc/focaltech_moc.c' ],
 }
 
 helper_sources = {
@@ -261,7 +269,7 @@ libfprint_drivers = static_library('fprint-drivers',
     install: false)
 
 mapfile = files('libfprint.ver')
-vflag = '-Wl,--version-script,@0@/@1@'.format(meson.source_root(), mapfile[0])
+vflag = '-Wl,--version-script,@0@/@1@'.format(meson.project_source_root(), mapfile[0])
 
 libfprint = shared_library(versioned_libname.split('lib')[1],
     sources: [
@@ -330,16 +338,18 @@ if install_udev_rules
     )
 endif
 
-custom_target('sync-udev-hwdb',
+sync_udev_udb = custom_target('sync-udev-hwdb',
     depends: udev_hwdb_generator,
     output: 'sync-udev-hwdb',
     install: false,
     command: [
         'cp', '-v',
         udev_hwdb_generator.full_path(),
-        meson.source_root() / 'data'
+        meson.project_source_root() / 'data'
     ]
 )
+
+alias_target('sync-udev-hwdb', sync_udev_udb)
 
 supported_devices = executable('fprint-list-supported-devices',
     'fprint-list-supported-devices.c',

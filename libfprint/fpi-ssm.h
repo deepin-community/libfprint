@@ -60,7 +60,7 @@ typedef void (*FpiSsmHandlerCallback)(FpiSsm   *ssm,
 
 /* for library and drivers */
 #define fpi_ssm_new(dev, handler, nr_states) \
-  fpi_ssm_new_full (dev, handler, nr_states, nr_states, #nr_states)
+        fpi_ssm_new_full (dev, handler, nr_states, nr_states, #nr_states)
 FpiSsm *fpi_ssm_new_full (FpDevice             *dev,
                           FpiSsmHandlerCallback handler,
                           int                   nr_states,
@@ -95,6 +95,8 @@ FpDevice * fpi_ssm_get_device (FpiSsm *machine);
 GError * fpi_ssm_get_error (FpiSsm *machine);
 GError * fpi_ssm_dup_error (FpiSsm *machine);
 int fpi_ssm_get_cur_state (FpiSsm *machine);
+
+void fpi_ssm_silence_debug (FpiSsm *machine);
 
 /* Callbacks to be used by the driver instead of implementing their own
  * logic.

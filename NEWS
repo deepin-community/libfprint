@@ -1,6 +1,69 @@
 This file lists notable changes in each release. For the full history of all
 changes, see ChangeLog.
 
+2024-02-20: v1.94.7 release
+
+Highlights:
+ * synaptics: fix enroll identify problem after user reset database.
+ * synaptics: New PIDs 0x0173, 0x0106, 0x0124.
+ * goodixmoc: New PID 0x6582.
+ * build: Do not require bash to build, only posix sh.
+ * fp-image: Simplify minutiae detection tasks.
+ * GLib 2.68 is now required to build libfprint.
+
+New drivers:
+ * realtek (PID 0x5813).
+ * focaltech_moc (PIDs 0x9E48, 0xD979, 0xA959).
+ * egismoc (PIDs 0x0582, 0x05a1).
+
+2023-08-17: v1.94.6 release
+
+Highlights:
+ * goodixmoc: New PIDs 0x60A4, 0x60BC, 0x6092, 0x633C and 0x6304.
+ * goodixmoc: Fix missing "enroll create" state.
+ * elanmoc: New PID 0x0C99.
+ * upektc: Improve compatibility with sensors 147e:2016.
+ * aes4000: Actually support 08FF:5501 devices.
+ * virtual-device-listener: Fix failing tests with GLib 2.76
+ * tests: Add installed tests
+
+Bugs fixed:
+ * #526 libfprint: fpcmoc: use after free if enrollment or identification is
+   cancelled (Vasily Khoruzhick)
+
+2022-10-13: v1.94.5 release
+
+Highlights:
+ * New driver: fpcmoc, supporting various FPC MOC Fingerprint Sensors
+ * goodixmoc: New PIDs 0x6014, 0x6094, 0x631C, 0x634C, 0x6384, 0x659A.
+ * goodixmoc: Support resetting device on firmware failure due to corrupted DB.
+ * elanmoc: New PIDs 0x0c88, 0x0c8c, 0x0c8d.
+ * synaptics: New PID 0x0104.
+ * upektc: New PID 0x2017.
+ * Fixed various memory leaks
+ * More tests
+
+2022-05-24: v1.94.4 release
+
+Highlights:
+ * synaptics: New PIDs 0x0168, 0x015f
+ * elan: New PID 0x0c4b
+ * elanspi: New PID 0x241f
+ * synaptics: Minor fix to interrupt transfer resubmission
+ * Avoid sysfs writes if value is already expected
+ * Improvements to the testing setup
+ * Fixes to the internal critical section API
+
+2021-11-02: v1.94.3 release
+
+Highlights:
+ * Ensure idle mainloop before completing enumeration (fprintd#119)
+ * It is now possible to extend already enrolled prints
+ * elanspi: Fix timeout error with some hardware (#438)
+ * elanspi: Fix cancellation issues
+ * goodixmoc: Return matching device print; fixes duplicate checking (#444)
+ * goodixmoc: Support clearing the storage (usually unused)
+
 2021-11-02: v1.94.2 release
 
 Highlights:
@@ -309,7 +372,7 @@ tests of the drivers using umockdev.
   - Mark fp_dscv_print functions as deprecated
 
 * Udev rules:
-  - Add some unsupported devices to the whitelist
+  - Add some unsupported devices to the allowlist
 
 2017-05-14: v0.7.0 release
 * Drivers:
@@ -359,7 +422,7 @@ tests of the drivers using umockdev.
   - Fix possible race condition, and cancellation in uru4000 driver
 
 * Udev rules:
-  - Add Microsoft keyboard to the suspend blacklist
+  - Add Microsoft keyboard to the suspend denylist
 
 * Plenty of build fixes
 
