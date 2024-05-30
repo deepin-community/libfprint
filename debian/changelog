@@ -1,3 +1,9 @@
+libfprint (1:1.94.7-2deepin1) unstable; urgency=medium
+
+  * Disable ut synaptice and focaltech_moc
+
+ -- xiangzelong <xiangzelong@deepin.org>  Thu, 30 May 2024 15:15:32 +0800
+
 libfprint (1:1.94.7-2) unstable; urgency=medium
 
   * debian/patches: Cherry-pick patches to ignore tests missing dependencies
